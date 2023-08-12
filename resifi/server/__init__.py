@@ -28,3 +28,6 @@ with app.app_context():
 
 from resifi.server.helloworld.views import hello_blueprint
 app.register_blueprint(hello_blueprint)
+
+#from resifi.server.business.views import business_blueprint
+#app.register_blueprint(business_blueprint)
