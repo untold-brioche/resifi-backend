@@ -67,6 +67,7 @@ class ReturnAPI(MethodView):
                 {
                     "message": "Return successfully performed",
                     "inventory_item": new_item.to_dict(),
+                    "to_address": charity_sent.address,
                 }
             ),
             201,
