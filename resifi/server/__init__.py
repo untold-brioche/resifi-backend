@@ -23,5 +23,8 @@ def _set_sqlite_pragma(dbapi_connection, connection_record):
         cursor.execute("PRAGMA foreign_keys=ON;")
         cursor.close()
 
+with app.app_context():
+    db.create_all()
+
 from resifi.server.test.views import test_blueprint
 app.register_blueprint(test_blueprint)
