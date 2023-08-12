@@ -57,6 +57,10 @@ from .item import item_blueprint
 
 app.register_blueprint(item_blueprint)
 
+from resifi.server.returns.views import return_blueprint
+
+app.register_blueprint(return_blueprint)
+
 from resifi.server.savings.views import savings_blueprint
 
 app.register_blueprint(savings_blueprint)

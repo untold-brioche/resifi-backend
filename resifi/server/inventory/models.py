@@ -7,6 +7,7 @@ class InventoryItem(db.Model):
     count_saved = db.Column(db.Integer)
     money_saved = db.Column(db.Float)
     business_id = db.Column(db.String, db.ForeignKey("business.id"))
+    charity_id = db.Column(db.String, db.ForeignKey("charity.id"))
     item_id = db.Column(db.String, db.ForeignKey("item.id"))
     item = db.relationship("Item", backref="inventory_item")
 
@@ -17,6 +18,7 @@ class InventoryItem(db.Model):
             "count_saved": self.count_saved,
             "money_saved": self.money_saved,
             "business_id": self.business_id,
+            "charity_id": self.charity_id,
             "item_id": self.item_id,
             "item": self.item.to_dict(),
         }
