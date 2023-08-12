@@ -5,8 +5,9 @@ from resifi.server.business.models import Business
 from resifi.server.charity.models import Charity
 from resifi.server.inventory.models import InventoryItem
 from resifi.server.item.models import Item
-from resifi.server.utils import generate_id
-from resifi.server import db
+from resifi.server.utils import generate_id, get_addr_dist
+from resifi.server import db, geo
+from geopy.distance import geodesic
 
 return_blueprint = Blueprint("return_blueprint", __name__)
 
@@ -28,6 +29,7 @@ class ReturnAPI(MethodView):
 
         item_id = data.get("item_id")
         business_id = data.get("business_id")
+        consumer_address = data.get("consumer_address")
 
         business = Business.query.filter_by(id=business_id).first()
         return_item = Item.query.filter_by(id=item_id).first()
@@ -51,9 +53,24 @@ class ReturnAPI(MethodView):
 
         charity_sent = charities[0]
 
+        loc_consumer = geo.geocode(consumer_address)
+        loc_charity = geo.geocode(charity_sent.address)
+        if not loc_charity:
+            raise ValueError(f"Could not find address for charity: '{charity_sent.address}'")
+        if not loc_consumer:
+            return jsonify({"error": f"Could not find location for address '{consumer_address}'."})
+
+        loc_business = geo.geocode(business.address)
+
+        dist_saved = geodesic(loc_consumer.point, loc_business.point).km \
+            - geodesic(loc_consumer.point, loc_charity.point).km
+
         new_item = InventoryItem(
             id=generate_id(),
-            dist_saved=random() * 48 + 2,
+            dist_saved=max(
+                dist_saved,
+                0
+            ),
             count_saved=1,
             money_saved=return_item.price,
             business_id=business_id,

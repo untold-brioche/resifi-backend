@@ -7,6 +7,7 @@ from sqlite3 import Connection as SQLite3Connection
 from resifi.server.config import apply_config
 from flask_httpauth import HTTPTokenAuth
 from flask import jsonify
+from geopy.geocoders import Nominatim
 
 auth = HTTPTokenAuth(scheme="Bearer")
 
@@ -18,6 +19,8 @@ with app.app_context():
 CORS(app)
 
 db = SQLAlchemy(app)
+
+geo = Nominatim(user_agent="resifi-server")
 
 
 # https://stackoverflow.com/questions/57726047/
