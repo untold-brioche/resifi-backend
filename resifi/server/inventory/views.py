@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 from flask.views import MethodView
+from resifi.server.charity.models import Charity
 from resifi.server.inventory.models import InventoryItem
 from resifi.server import db
 from flask import request
@@ -23,6 +24,7 @@ class InventoryAPI(MethodView):
             "dist_saved",
             "count_saved",
             "money_saved",
+            "charity_id",
         ]
 
         missing_fields = [field for field in required_fields if field not in data]
@@ -32,12 +34,20 @@ class InventoryAPI(MethodView):
                 400,
             )
 
+        sent_charity = Charity.query(charity_id=data["charity_id"]).first()
+        if sent_charity is None:
+            return (
+                jsonify({"error": f"No such charity: ID {data['charity_id']}"}),
+                400,
+            )
+
         new_item = InventoryItem(
             id=generate_id(),
             dist_saved=data["dist_saved"],
             count_saved=data["count_saved"],
             money_saved=data["money_saved"],
             business_id=id,
+            charity_id=id,
         )
 
         db.session.add(new_item)

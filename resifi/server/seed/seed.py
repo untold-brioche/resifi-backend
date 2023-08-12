@@ -82,31 +82,17 @@ def seed_items():
     print(f"Seeded ({len(items)}) items")
 
 
+# https://www.feedingamerica.org/find-your-local-foodbank
 charities = [
     {
-        "id": 1,
-        "name": "Resifi",
-        "address": "123 Main St, San Francisco, CA 94122",
-    },
-    {
         "id": 2,
-        "name": "Resifi",
-        "address": "123 Main St, San Francisco, CA 94122",
-    },
-    {
-        "id": 3,
-        "name": "Resifi",
-        "address": "123 Main St, San Francisco, CA 94122",
+        "name": "The Rockies",
+        "address": "10700 E. 45th Ave, Denver, CO 80239",
     },
     {
         "id": 4,
-        "name": "Resifi",
-        "address": "123 Main St, San Francisco, CA 94122",
-    },
-    {
-        "id": 5,
-        "name": "Resifi",
-        "address": "123 Main St, San Francisco, CA 94122",
+        "name": "City Harvest",
+        "address": "150 52nd Street, Brooklyn, NY 11232",
     },
 ]
 
@@ -350,5 +336,6 @@ def seed_all():
     seed_items()
     seed_charities()
     seed_businesses()
-    seed_inventory_items()
+    # this happens during execution
+    #seed_inventory_items()
     print("Seeded all")
