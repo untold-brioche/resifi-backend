@@ -26,5 +26,5 @@ def _set_sqlite_pragma(dbapi_connection, connection_record):
 with app.app_context():
     db.create_all()
 
-from resifi.server.test.views import test_blueprint
-app.register_blueprint(test_blueprint)
+from resifi.server.helloworld.views import hello_blueprint
+app.register_blueprint(hello_blueprint)
