@@ -5,7 +5,7 @@ from resifi.server.business.models import Business
 from resifi.server.charity.models import Charity
 from resifi.server.inventory.models import InventoryItem
 from resifi.server.item.models import Item
-from resifi.server.utils import generate_id, get_addr_dist
+from resifi.server.utils import generate_id
 from resifi.server import db, geo
 from geopy.distance import geodesic
 
