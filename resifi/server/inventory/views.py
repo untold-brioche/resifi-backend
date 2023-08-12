@@ -12,7 +12,7 @@ inventory_blueprint = Blueprint("inventory_blueprint", __name__)
 
 class InventoryAPI(MethodView):
     def get(self, id):
-        items = InventoryItem.query.filter_by(business_id=id).all()
+        items = InventoryItem.query.filter_by(business_id=id).order_by(InventoryItem.create_date).all()
         return jsonify(
             {"items": [item.to_dict() for item in items], "count": len(items)}
         )
