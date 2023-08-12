@@ -2,6 +2,7 @@ from resifi.server import db
 from resifi.server.item.models import Item
 from resifi.server.business.models import Business
 from resifi.server.inventory.models import InventoryItem
+from resifi.server.charity.models import Charity
 
 items = [
     {
@@ -79,6 +80,48 @@ def seed_items():
         db.session.commit()
         print("Added item")
     print(f"Seeded ({len(items)}) items")
+
+
+charities = [
+    {
+        "id": 1,
+        "name": "Resifi",
+        "address": "123 Main St, San Francisco, CA 94122",
+    },
+    {
+        "id": 2,
+        "name": "Resifi",
+        "address": "123 Main St, San Francisco, CA 94122",
+    },
+    {
+        "id": 3,
+        "name": "Resifi",
+        "address": "123 Main St, San Francisco, CA 94122",
+    },
+    {
+        "id": 4,
+        "name": "Resifi",
+        "address": "123 Main St, San Francisco, CA 94122",
+    },
+    {
+        "id": 5,
+        "name": "Resifi",
+        "address": "123 Main St, San Francisco, CA 94122",
+    },
+]
+
+
+def seed_charities():
+    for charity in charities:
+        new_charity = Charity(
+            id=charity["id"],
+            name=charity["name"],
+            address=charity["address"],
+        )
+        db.session.add(new_charity)
+        db.session.commit()
+        print("Added charity")
+    print(f"Seeded ({len(charities)}) charities")
 
 
 businesses = [
@@ -305,6 +348,7 @@ def seed_inventory_items():
 
 def seed_all():
     seed_items()
+    seed_charities()
     seed_businesses()
     seed_inventory_items()
     print("Seeded all")

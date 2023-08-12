@@ -1,28 +1,28 @@
 from flask import Blueprint, jsonify
-from resifi.server.business.models import Business
+from resifi.server.charity.models import Charity
 from flask.views import MethodView
 from resifi.server import db
 from flask import request
 import random
 from resifi.server.utils import generate_id
 
-business_blueprint = Blueprint("business_blueprint", __name__)
+charity_blueprint = Blueprint("charity_blueprint", __name__)
 
 
-class BusinessAPI(MethodView):
+class CharityAPI(MethodView):
     def get(self, id=-1):
         if id == -1:
-            businesses = Business.query.all()
+            charityes = Charity.query.all()
             return jsonify(
                 {
-                    "items": [business.as_dict() for business in businesses],
-                    "count": len(businesses),
+                    "items": [charity.as_dict() for charity in charityes],
+                    "count": len(charityes),
                 }
             )
-        business = Business.query.get(id)
-        if not business:
-            return jsonify({"error": "No business found with that id."}), 404
-        return jsonify(business.as_dict())
+        charity = Charity.query.get(id)
+        if not charity:
+            return jsonify({"error": "No charity found with that id."}), 404
+        return jsonify(charity.as_dict())
 
     def post(self):
         data = request.json
@@ -36,9 +36,9 @@ class BusinessAPI(MethodView):
             )
 
         id = generate_id()
-        new_business = Business(id=id, name=name, address=address)
+        new_charity = Charity(id=id, name=name, address=address)
         # Assuming you're using some kind of database session and committing changes
-        db.session.add(new_business)
+        db.session.add(new_charity)
         db.session.commit()
         return (
             jsonify({"id": id, "name": name, "address": address}),
@@ -46,11 +46,9 @@ class BusinessAPI(MethodView):
         )
 
 
-business_view = BusinessAPI.as_view("business_api")
-business_blueprint.add_url_rule(
-    "/business/<id>", view_func=business_view, methods=["GET"]
-)
+charity_view = CharityAPI.as_view("charity_api")
+charity_blueprint.add_url_rule("/charity/<id>", view_func=charity_view, methods=["GET"])
 
-business_blueprint.add_url_rule(
-    "/business", view_func=business_view, methods=["GET", "POST"]
+charity_blueprint.add_url_rule(
+    "/charity", view_func=charity_view, methods=["GET", "POST"]
 )

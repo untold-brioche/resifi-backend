@@ -29,6 +29,10 @@ from .business import business_blueprint
 
 app.register_blueprint(business_blueprint)
 
+from .charity import charity_blueprint
+
+app.register_blueprint(charity_blueprint)
+
 from .inventory import inventory_blueprint
 
 app.register_blueprint(inventory_blueprint)
