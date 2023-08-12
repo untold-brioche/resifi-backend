@@ -4,6 +4,7 @@ from resifi.server.item.models import Item
 from resifi.server import db
 from flask import request
 from resifi.server.utils import generate_id
+from resifi.server import auth
 
 item_blueprint = Blueprint("item_blueprint", __name__)
 
@@ -20,6 +21,7 @@ class ItemAPI(MethodView):
             return jsonify({"error": "Item not found"}), 404
         return jsonify(item.to_dict())
 
+    @auth.login_required
     def post(self):
         data = request.json
         required_fields = [

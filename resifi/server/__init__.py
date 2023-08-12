@@ -5,6 +5,10 @@ from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from sqlite3 import Connection as SQLite3Connection
 from resifi.server.config import apply_config
+from flask_httpauth import HTTPTokenAuth
+from flask import jsonify
+
+auth = HTTPTokenAuth(scheme="Bearer")
 
 app = Flask(__name__)
 
@@ -23,6 +27,18 @@ def _set_sqlite_pragma(dbapi_connection, connection_record):
         cursor = dbapi_connection.cursor()
         cursor.execute("PRAGMA foreign_keys=ON;")
         cursor.close()
+
+
+@auth.verify_token
+def verify_token(token):
+    if token == "basic-auth-token":
+        return True
+    return False
+
+
+@auth.error_handler
+def unauthorized():
+    return jsonify({"error": "Unauthorized access"}), 401
 
 
 from .business import business_blueprint

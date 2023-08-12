@@ -4,6 +4,7 @@ from resifi.server.inventory.models import InventoryItem
 from resifi.server import db
 from flask import request
 from resifi.server.utils import generate_id
+from resifi.server import auth
 
 inventory_blueprint = Blueprint("inventory_blueprint", __name__)
 
@@ -15,6 +16,7 @@ class InventoryAPI(MethodView):
             {"items": [item.to_dict() for item in items], "count": len(items)}
         )
 
+    @auth.login_required
     def post(self, id):
         data = request.json
         required_fields = [

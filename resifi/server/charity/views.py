@@ -3,8 +3,8 @@ from resifi.server.charity.models import Charity
 from flask.views import MethodView
 from resifi.server import db
 from flask import request
-import random
 from resifi.server.utils import generate_id
+from resifi.server import auth
 
 charity_blueprint = Blueprint("charity_blueprint", __name__)
 
@@ -24,6 +24,7 @@ class CharityAPI(MethodView):
             return jsonify({"error": "No charity found with that id."}), 404
         return jsonify(charity.as_dict())
 
+    @auth.login_required
     def post(self):
         data = request.json
         name = data.get("name")

@@ -3,8 +3,8 @@ from resifi.server.business.models import Business
 from flask.views import MethodView
 from resifi.server import db
 from flask import request
-import random
 from resifi.server.utils import generate_id
+from resifi.server import auth
 
 business_blueprint = Blueprint("business_blueprint", __name__)
 
@@ -24,6 +24,7 @@ class BusinessAPI(MethodView):
             return jsonify({"error": "No business found with that id."}), 404
         return jsonify(business.as_dict())
 
+    @auth.login_required
     def post(self):
         data = request.json
         name = data.get("name")
