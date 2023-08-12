@@ -72,10 +72,6 @@ from .shipping_label import shipping_label_blueprint
 
 app.register_blueprint(shipping_label_blueprint)
 
-from .pdfservice import pdf_blueprint
-
-app.register_blueprint(pdf_blueprint)
-
 from .seed import seed_blueprint
 
 app.register_blueprint(seed_blueprint)
