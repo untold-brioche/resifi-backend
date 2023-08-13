@@ -86,12 +86,12 @@ def seed_items():
 charities = [
     {
         "id": 2,
-        "name": "The Rockies",
+        "name": "Food Bank of the Rockies",
         "address": "10700 E. 45th Ave, Denver, CO 80239",
     },
     {
         "id": 4,
-        "name": "City Harvest",
+        "name": "City Harvest Food Bank",
         "address": "150 52nd Street, Brooklyn, NY 11232",
     },
 ]
