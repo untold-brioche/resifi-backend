@@ -26,6 +26,6 @@ class InventoryItem(db.Model):
             "business_id": self.business_id,
             "charity_id": self.charity_id,
             "item_id": self.item_id,
-            "create_date": self.create_date,
+            "create_date": datetime.timestamp(self.create_date.now()),
             "item": self.item.to_dict(),
         }
